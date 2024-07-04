@@ -151,7 +151,7 @@ text_to_token(train_data_path,train_token_path)
 text_to_token(test_data_path,test_token_path)
 
 if not os.path.exists(train_samples_path):
-    os.mkdir(train_data_path)
+    os.mkdir(train_samples_path)
 
 if not os.path.exists(test_samples_path):
     os.mkdir(test_samples_path)
