@@ -304,7 +304,7 @@ class MyTransformerDecoder(nn.Module):
 
 class MyTransformer(nn.Module):
     def __init__(self, tgt_vocab_size, d_model=512, nhead=8, num_encoder_layers=6, num_decoder_layers=6, dim_feedforward=2048, dropout=0.1):
-        
+        super(MyTransformer, self).__init__()
         encoder_layer = MyTransformerEncoderLayer(d_model, nhead, dim_feedforward, dropout)
         encoder_norm = nn.LayerNorm(d_model)
         self.encoder = MyTransformerEncoder(encoder_layer, num_encoder_layers, encoder_norm)
