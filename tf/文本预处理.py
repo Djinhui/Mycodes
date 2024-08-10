@@ -54,6 +54,24 @@ word_index = tokenizer.word_index
 print(word_index)  # {'爱': 1, '爸爸': 2, '妈妈': 3, '我': 4, '中国': 5}
 print(len(word_index))  # 5
 
+
+tokens_samples = [['爸爸', '妈妈', '爱', '我'], ['爸爸', '妈妈', '爱', '中国'], ['我','爱', '中国']]
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(tokens_samples)
+# tokenizer.fit_on_sequences()
+word_index = tokenizer.word_index
+print(word_index)   # {'爱': 1, '爸爸': 2, '妈妈': 3, '我': 4, '中国': 5}
+print(len(word_index))   # 5
+
+tokens_samples = [['爸爸 妈妈 爱 我'], ['爸爸 妈妈 爱 中国'], ['我 爱 中国']]
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(tokens_samples)
+# tokenizer.fit_on_sequences()
+word_index = tokenizer.word_index
+print(word_index)   # {'爸爸 妈妈 爱 我': 1, '爸爸 妈妈 爱 中国': 2, '我 爱 中国': 3}
+print(len(word_index))  # 3
+
+
 # 将词替换成索引
 sequences = tokenizer.texts_to_sequences(tokens_samples)
 print(sequences)  # [[2, 3, 1, 4], [2, 3, 1, 5], [4, 1, 5]]
