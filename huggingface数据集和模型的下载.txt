@@ -1,0 +1,54 @@
+模型使用
+1. 模型直接from_pretrained(checkpoint_name)无法连接
+2. VPN在Models模块搜索对应的checkpoint_name，下载需要的内容到本地文件夹，一般包括config.json、tokenizer.json、tokenizer_config.json、vocab.txt、pytorch_model.bin(或者tf格式)
+3. 模型加载方式为:hf_model.from_pretraned(checkpoint_name_on_my_pc_path)
+
+
+数据使用
+1. 数据直接datasets.load_dataset(path, name) 无法连接
+2. VPN在google colab使用raw_datasets=datasets.load_dataset(path, name)命令加载数据集
+3. colab中保存加载后的数据集为hf arrow格式:raw_datasets.save_to_disk(a_name)
+4. colab中运行!zip -r folder_name.zip folder_name
+5. colab中下载folder_name.zip到本地后解压
+6. 本地加载：raw_datasets=datasets.load_from_disk(folder_name)
+
+drug_dataset_clean.save_to_disk('drug-reviews')
+
+from datasets import load_from_disk
+drug_dataset_reloaded = load_from_disk('drug-reviews')
+
+'''
+drug-reviews/
+├── dataset_dict.json
+├── test
+│   ├── dataset.arrow
+│   ├── dataset_info.json
+│   └── state.json
+├── train
+│   ├── dataset.arrow
+│   ├── dataset_info.json
+│   ├── indices.arrow
+│   └── state.json
+└── validation
+    ├── dataset.arrow
+    ├── dataset_info.json
+    ├── indices.arrow
+    └── state.json
+
+'''
+
+
+# 或者保存为json/csv
+# For the CSV and JSON formats, we have to store each split as a separate file. 
+
+# in COLAB执行并下载jsonl文件
+for split, dataset in drug_dataset_clean.items():
+    dataset.to_json(f'drug-reviews-{split}.jsonl')
+
+# 本地加载
+data_files = {
+    "train": "drug-reviews-train.jsonl",
+    "validation": "drug-reviews-validation.jsonl",
+    "test": "drug-reviews-test.jsonl",
+}
+drug_dataset_reloaded = load_dataset("json", data_files=data_files)
