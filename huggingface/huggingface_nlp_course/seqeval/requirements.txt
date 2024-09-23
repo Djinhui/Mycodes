@@ -1,0 +1,2 @@
+git+https://github.com/huggingface/evaluate@c47638055e43c918f30c7dae4cdde7b792483790
+seqeval
